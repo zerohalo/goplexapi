@@ -1,7 +1,6 @@
 package goplexapi
 
 import (
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -27,8 +26,6 @@ func (p *PlexClient) makeRequest(method, endpoint string, payload interface{}) (
 	url := fmt.Sprintf("%s%s", p.BaseURL, endpoint)
 	var req *http.Request
 	var err error
-
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
 	if method == "POST" {
 		req, err = http.NewRequest(method, url, strings.NewReader(payload.(string)))

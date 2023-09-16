@@ -1,7 +1,6 @@
 package goplexapi
 
 import (
-	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"io"
@@ -146,32 +145,15 @@ func (p *PlexClient) makeRequest(method, endpoint string, payload interface{}) (
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Sprintf("Error: %s\n", err)
 		return nil, err
 	}
 
 	return body, nil
 }
 
-func (p *PlexClient) GetLibrarySections() ([]map[string]interface{}, error) {
-	data, err := p.makeRequest("GET", "/library/sections", nil)
-	if err != nil {
-		fmt.Sprintf("Error: %s\n", err)
-		return nil, err
-	}
-
-	var result map[string]interface{}
-	if err := json.Unmarshal(data, &result); err != nil {
-		return nil, err
-	}
-
-	return result["MediaContainer"].(map[string]interface{})["Directory"].([]map[string]interface{}), nil
-}
-
 func (p *PlexClient) GetCurrentPlayingSong(clientName string) (*TrackInfo, error) {
 	data, err := p.makeRequest("GET", "/status/sessions", nil)
 	if err != nil {
-		fmt.Sprintf("Error: %s\n", err)
 		return nil, err
 	}
 	fmt.Println(string(data))
@@ -197,7 +179,6 @@ func (p *PlexClient) GetCurrentPlayingSong(clientName string) (*TrackInfo, error
 func (p *PlexClient) GetAlbumArt(albumArtURL string) ([]byte, error) {
 	data, err := p.makeRequest("GET", albumArtURL, nil)
 	if err != nil {
-		fmt.Sprintf("Error: %s\n", err)
 		return nil, err
 	}
 

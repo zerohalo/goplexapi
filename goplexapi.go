@@ -78,6 +78,7 @@ func (p *PlexClient) GetCurrentPlayingSong(playerClientName string) (string, err
 
 	var result map[string]interface{}
 	if err := json.Unmarshal(data, &result); err != nil {
+		fmt.Printf("Error: %s\n", err)
 		return "", err
 	}
 

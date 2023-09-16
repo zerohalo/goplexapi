@@ -156,7 +156,7 @@ func (p *PlexClient) GetCurrentPlayingSong(clientName string) (*TrackInfo, error
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(string(data))
+	//fmt.Println(string(data))
 	var mediaContainer MediaContainer
 	if err := xml.Unmarshal(data, &mediaContainer); err != nil {
 		return nil, err

@@ -115,6 +115,7 @@ type TrackInfo struct {
 	Artist string
 	Album  string
 	Title  string
+	Thumb  string
 }
 
 func (p *PlexClient) makeRequest(method, endpoint string, payload interface{}) ([]byte, error) {
@@ -185,9 +186,20 @@ func (p *PlexClient) GetCurrentPlayingSong(clientName string) (*TrackInfo, error
 				Artist: track.GrandparentTitle,
 				Album:  track.ParentTitle,
 				Title:  track.Title,
+				Thumb:  track.GrandparentThumb,
 			}, nil
 		}
 	}
 
 	return nil, fmt.Errorf("No song currently playing on %s", clientName)
+}
+
+func (p *PlexClient) GetAlbumArt(albumArtURL string) ([]byte, error) {
+	data, err := p.makeRequest("GET", albumArtURL, nil)
+	if err != nil {
+		fmt.Sprintf("Error: %s\n", err)
+		return nil, err
+	}
+
+	return data, nil
 }

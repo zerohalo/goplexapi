@@ -29,6 +29,7 @@ func (p *PlexClient) makeRequest(method, endpoint string, payload interface{}) (
 	var err error
 
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+
 	if method == "POST" {
 		req, err = http.NewRequest(method, url, strings.NewReader(payload.(string)))
 	} else {

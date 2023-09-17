@@ -174,7 +174,7 @@ func (p *PlexClient) GetCurrentPlayingSong(clientName, userName string) (*TrackI
 		}
 	}
 
-	return nil, fmt.Errorf("No song currently playing on %s by UserID %s", clientName, userID)
+	return nil, fmt.Errorf("No song currently playing on %s by userName %s", clientName, userName)
 }
 
 func (p *PlexClient) GetAlbumArt(albumArtURL string) ([]byte, error) {

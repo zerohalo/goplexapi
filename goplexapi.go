@@ -63,6 +63,7 @@ type Track struct {
 	UpdatedAt            int      `xml:"updatedAt,attr"`
 	ViewOffset           int      `xml:"viewOffset,attr"`
 	Media                []Media  `xml:"Media"`
+	User                 User     `xml:"User"`
 	Player               Player   `xml:"Player"`
 }
 
@@ -151,7 +152,7 @@ func (p *PlexClient) makeRequest(method, endpoint string, payload interface{}) (
 	return body, nil
 }
 
-func (p *PlexClient) GetCurrentPlayingSong(clientName, userID string) (*TrackInfo, error) {
+func (p *PlexClient) GetCurrentPlayingSong(clientName, userName string) (*TrackInfo, error) {
 	data, err := p.makeRequest("GET", "/status/sessions", nil)
 	if err != nil {
 		return nil, err
@@ -163,7 +164,7 @@ func (p *PlexClient) GetCurrentPlayingSong(clientName, userID string) (*TrackInf
 	}
 
 	for _, track := range mediaContainer.Tracks {
-		if track.Player.Product == clientName && track.Player.UserID == userID {
+		if track.Player.Product == clientName && track.User.Title == userName {
 			return &TrackInfo{
 				Artist: track.GrandparentTitle,
 				Album:  track.ParentTitle,

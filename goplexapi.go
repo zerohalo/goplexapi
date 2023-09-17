@@ -151,7 +151,7 @@ func (p *PlexClient) makeRequest(method, endpoint string, payload interface{}) (
 	return body, nil
 }
 
-func (p *PlexClient) GetCurrentPlayingSong(clientName string) (*TrackInfo, error) {
+func (p *PlexClient) GetCurrentPlayingSong(clientName, userID string) (*TrackInfo, error) {
 	data, err := p.makeRequest("GET", "/status/sessions", nil)
 	if err != nil {
 		return nil, err
@@ -163,7 +163,7 @@ func (p *PlexClient) GetCurrentPlayingSong(clientName string) (*TrackInfo, error
 	}
 
 	for _, track := range mediaContainer.Tracks {
-		if track.Player.Product == clientName {
+		if track.Player.Product == clientName && track.Player.UserID == userID {
 			return &TrackInfo{
 				Artist: track.GrandparentTitle,
 				Album:  track.ParentTitle,

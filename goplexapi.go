@@ -168,7 +168,7 @@ func (p *PlexClient) GetCurrentPlayingSong(clientName string) (*TrackInfo, error
 				Artist: track.GrandparentTitle,
 				Album:  track.ParentTitle,
 				Title:  track.Title,
-				Thumb:  track.GrandparentThumb,
+				Thumb:  track.ParentThumb,
 			}, nil
 		}
 	}
